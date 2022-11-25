@@ -28,6 +28,7 @@ public class NetworkRoomManagerExtended : NetworkRoomManager
 
     public override void OnRoomStartClient() => OnConnecting?.Invoke();
     public override void OnRoomClientDisconnect() => OnFailedToConnect?.Invoke();
+    public override void OnRoomStopServer() => OnFailedToConnect?.Invoke();
     public override void OnRoomClientEnter() => OnClientEntered?.Invoke();
     public override void OnRoomServerPlayersReady() => OnPlayersReady?.Invoke(true);
     public override void OnRoomServerPlayersNotReady() => OnPlayersReady?.Invoke(false);

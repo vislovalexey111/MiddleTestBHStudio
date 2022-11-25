@@ -40,6 +40,10 @@ public class PlayerController : NetworkBehaviour
     [Command] private void CmdDash(bool isDashing) => IsDashing = isDashing;
     [Command] private void CmdTakeDamage(PlayerController playerController, bool isTakingDamage) => playerController.IsTakingDamage = isTakingDamage;
 
+    // Actions
+    public Action<string> OnWin;
+    public Action<int> OnUpdatePoints;
+
     // SyncVar Handlers
     private void HandleNameChange(string _, string newValue) => _displayName.text = newValue;
     private void HandleDashing(bool _, bool newValue) { if (newValue) StartCoroutine(DashCoroutine()); }
@@ -61,10 +65,6 @@ public class PlayerController : NetworkBehaviour
 
         OnUpdatePoints?.Invoke(newPoints);
     }
-
-    // Actions
-    public Action<string> OnWin;
-    public Action<int> OnUpdatePoints;
 
     // Coroutines
     private IEnumerator DashCoroutine()

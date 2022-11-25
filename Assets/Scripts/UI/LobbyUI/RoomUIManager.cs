@@ -15,7 +15,7 @@ public class RoomUIManager : NetworkBehaviour
     {
         _buttonReady.onClick.AddListener(delegate { SwitchReady(true); });
         _buttonReadyCancel.onClick.AddListener(delegate { SwitchReady(false); });
-        _buttonStart.onClick.AddListener(delegate { _networkManager.ChangeScene(); });
+        _buttonStart.onClick.AddListener(_networkManager.ChangeScene);
         _buttonBack.onClick.AddListener(Disconnect);
 
         _networkManager.OnUpdatePlayerReadyState += UpdatePlayerUI;
@@ -36,7 +36,7 @@ public class RoomUIManager : NetworkBehaviour
         _buttonBack.onClick.RemoveAllListeners();
         _buttonStart.onClick.RemoveAllListeners();
         _buttonReady.onClick.RemoveAllListeners();
-        _buttonReady.onClick.RemoveAllListeners();
+        _buttonReadyCancel.onClick.RemoveAllListeners();
 
         _networkManager.OnUpdatePlayerReadyState -= UpdatePlayerUI;
         _networkManager.OnPlayersReady -= EnableStartButton;
@@ -50,11 +50,6 @@ public class RoomUIManager : NetworkBehaviour
         _networkManager.OnSwitchReadyState?.Invoke(playerState);
     }
 
-    private void Disconnect()
-    {
-        
-    }
-
     private void UpdateUI()
     {
         for (int i = 0; i < _playerLabels.Length; i++)
@@ -64,6 +59,17 @@ public class RoomUIManager : NetworkBehaviour
         {
             _playerLabels[i].gameObject.SetActive(true);
             _playerLabels[i].UpdateLabelInfo(_networkManager.roomSlots[i] as NetworkRoomPlayerExtended);
+        }
+    }
+    private void Disconnect()
+    {
+        _networkManager.StopClient();
+
+        if (isServer)
+        {
+            _networkManager.transport.ServerStop();
+            NetworkServer.DisconnectAll();
+            NetworkServer.ClearHandlers();
         }
     }
 

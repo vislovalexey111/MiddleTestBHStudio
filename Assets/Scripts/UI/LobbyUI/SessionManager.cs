@@ -15,7 +15,7 @@ public class SessionManager : MonoBehaviour
     private void OnDestroy() => EventsDeactivate();
     private void CreateRoom() => _networkManager.StartHost();
     private void OpenJoinMenu(bool isOpen) => _joinLobbyMenu.gameObject.SetActive(isOpen);
-    private void CloseRoomScreen() => _lobbyUIManager.gameObject.SetActive(true);
+    private void CloseRoomScreen() => SwitchToRoom(false);
 
     private void JoinRoom(string ipAdress)
     {
@@ -29,12 +29,17 @@ public class SessionManager : MonoBehaviour
         _playerNameInput.gameObject.SetActive(!goForward);
     }
 
-    private void ChangeToRoom()
+    private void SwitchToRoom(bool toRoom)
     {
-        EventsDeactivate();
+        _lobbyUIManager.gameObject.SetActive(!toRoom);
+        _roomUIManager.gameObject.SetActive(toRoom);
+    }
+
+    private void LaunchRoom()
+    {
+        //EventsDeactivate();
         OpenJoinMenu(false);
-        _lobbyUIManager.gameObject.SetActive(false);
-        _roomUIManager.gameObject.SetActive(true);
+        SwitchToRoom(true);
     }
 
     private void EventsSetup()
@@ -45,7 +50,7 @@ public class SessionManager : MonoBehaviour
         _lobbyUIManager.OnCreateRoom += CreateRoom;
         _lobbyUIManager.OnGoingBack += NameInputToLobby;
         _playerNameInput.OnConfirmName += NameInputToLobby;
-        _networkManager.OnClientEntered += ChangeToRoom;
+        _networkManager.OnClientEntered += LaunchRoom;
         _networkManager.OnFailedToConnect += CloseRoomScreen;
         _networkManager.OnFailedToConnect += _joinLobbyMenu.FailedToConnect;
         _networkManager.OnConnecting += _joinLobbyMenu.Connecting;
@@ -59,7 +64,7 @@ public class SessionManager : MonoBehaviour
         _lobbyUIManager.OnCreateRoom -= CreateRoom;
         _lobbyUIManager.OnGoingBack -= NameInputToLobby;
         _playerNameInput.OnConfirmName -= NameInputToLobby;
-        _networkManager.OnClientEntered -= ChangeToRoom;
+        _networkManager.OnClientEntered -= LaunchRoom;
         _networkManager.OnFailedToConnect -= CloseRoomScreen;
         _networkManager.OnFailedToConnect -= _joinLobbyMenu.FailedToConnect;
         _networkManager.OnConnecting -= _joinLobbyMenu.Connecting;

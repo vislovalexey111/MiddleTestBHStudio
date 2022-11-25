@@ -12,13 +12,14 @@ public class PlayerLabelManager : MonoBehaviour
     
     public void ShowButtonRemove() => _buttonRemove.gameObject.SetActive(true);
     public void SetReadyStatus(bool state) => _readyStateDisplay.text = state ? "Ready" : "Not Ready";
-    public void SetName(string newName) => _playerName.text = newName;
 
     public void UpdateLabelInfo(NetworkRoomPlayerExtended player)
     {
         if (player == null) return;
-        _playerName.text = player.Name;
+
         SetReadyStatus(player.readyToBegin);
+
+        _playerName.text = player.Name;
         _buttonRemove.onClick.RemoveAllListeners();
         _buttonRemove.onClick.AddListener( delegate { player.connectionToClient.Disconnect();  } );
     }
