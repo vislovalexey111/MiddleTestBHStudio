@@ -157,7 +157,7 @@ RectTransform:
   - {fileID: 1466814251}
   - {fileID: 558816762}
   m_Father: {fileID: 1103115350}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -449,7 +449,7 @@ GameObject:
   - component: {fileID: 126529210}
   - component: {fileID: 126529209}
   m_Layer: 5
-  m_Name: ButtonBack
+  m_Name: ToMainMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -473,8 +473,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -610, y: -420}
-  m_SizeDelta: {x: 318.28, y: 80}
+  m_AnchoredPosition: {x: -540, y: -420}
+  m_SizeDelta: {x: 435, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &126529209
 MonoBehaviour:
@@ -569,7 +569,7 @@ GameObject:
   - component: {fileID: 231479025}
   - component: {fileID: 231479026}
   m_Layer: 5
-  m_Name: LobbyUI
+  m_Name: MainMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -612,6 +612,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3929fd420e1013c45baaf725e8f1e0d6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _joinRoomUIManager: {fileID: 1545776251}
+  _playerNameUIManager: {fileID: 593698256}
+  _roomUIManager: {fileID: 1103115351}
   _buttonStartHost: {fileID: 1726504032}
   _buttonStartClient: {fileID: 1737542966}
   _buttonBack: {fileID: 572058456}
@@ -628,7 +631,6 @@ GameObject:
   - component: {fileID: 305271581}
   - component: {fileID: 305271580}
   - component: {fileID: 305271579}
-  - component: {fileID: 305271583}
   m_Layer: 5
   m_Name: UI
   m_TagString: Untagged
@@ -723,23 +725,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &305271583
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 305271578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7c2eeca861c5b86488eb507716c73e09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _networkManager: {fileID: 1875312295}
-  _lobbyUIManager: {fileID: 231479026}
-  _roomUIManager: {fileID: 1103115351}
-  _playerNameInput: {fileID: 593698256}
-  _joinLobbyMenu: {fileID: 1545776251}
 --- !u!1 &318651174
 GameObject:
   m_ObjectHideFlags: 0
@@ -753,7 +738,7 @@ GameObject:
   - component: {fileID: 318651177}
   - component: {fileID: 318651176}
   m_Layer: 5
-  m_Name: ButtonStart
+  m_Name: Start
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -920,7 +905,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: back
+  m_text: to main menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -1659,7 +1644,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -320}
-  m_SizeDelta: {x: 320, y: 80}
+  m_SizeDelta: {x: 392.9, y: 80}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &572058456
 MonoBehaviour:
@@ -1795,7 +1780,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b31c6f61d3587c4382fa3d674edfb96, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _playerNameInput: {fileID: 685110313}
+  _mainMenuUIManager: {fileID: 231479026}
+  _playerNameInputField: {fileID: 685110313}
   _errorDisplay: {fileID: 1328691800}
   _buttonConfirm: {fileID: 1330138478}
 --- !u!1 &607000485
@@ -1811,7 +1797,7 @@ GameObject:
   - component: {fileID: 607000488}
   - component: {fileID: 607000487}
   m_Layer: 5
-  m_Name: ButtonReadyCancel
+  m_Name: Cancel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1831,7 +1817,7 @@ RectTransform:
   m_Children:
   - {fileID: 367586993}
   m_Father: {fileID: 1103115350}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2121,7 +2107,7 @@ GameObject:
   - component: {fileID: 685110314}
   - component: {fileID: 685110313}
   m_Layer: 5
-  m_Name: PlayerNameInputField
+  m_Name: PlayerName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3037,9 +3023,9 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 318651175}
-  - {fileID: 51074989}
   - {fileID: 1823722870}
   - {fileID: 607000486}
+  - {fileID: 51074989}
   - {fileID: 126529208}
   m_Father: {fileID: 305271582}
   m_RootOrder: 5
@@ -3061,19 +3047,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aedb04a8520b7424f995d467fb155319, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  syncDirection: 0
-  syncMode: 0
-  syncInterval: 0.1
-  _buttonBack: {fileID: 126529209}
+  _mainMenuUIManager: {fileID: 0}
+  _buttonToMainMenu: {fileID: 126529209}
   _buttonReady: {fileID: 1823722871}
-  _buttonReadyCancel: {fileID: 607000487}
+  _buttonCancel: {fileID: 607000487}
   _buttonStart: {fileID: 318651176}
-  _playerLabels:
+  _roomPlayerLabels:
   - {fileID: 1241310484}
   - {fileID: 1643669673}
   - {fileID: 1466814252}
   - {fileID: 558816763}
-  _networkManager: {fileID: 1875312295}
 --- !u!114 &1103115352
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3748,7 +3731,7 @@ GameObject:
   - component: {fileID: 1330138479}
   - component: {fileID: 1330138478}
   m_Layer: 5
-  m_Name: ConfirmButton
+  m_Name: Confirm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4255,7 +4238,7 @@ GameObject:
   - component: {fileID: 1545776250}
   - component: {fileID: 1545776251}
   m_Layer: 5
-  m_Name: JoinLobby
+  m_Name: JoinRoomMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4299,6 +4282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64d4aa0f553af6442b3eff31a833b679, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _mainMenuUIManager: {fileID: 231479026}
   _errorMessage: {fileID: 1438180817}
   _ipAdressInputField: {fileID: 356947664}
   _joinButton: {fileID: 1115434068}
@@ -5373,7 +5357,7 @@ GameObject:
   - component: {fileID: 1823722872}
   - component: {fileID: 1823722871}
   m_Layer: 5
-  m_Name: ButtonReady
+  m_Name: Ready
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5393,7 +5377,7 @@ RectTransform:
   m_Children:
   - {fileID: 52550528}
   m_Father: {fileID: 1103115350}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5568,7 +5552,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1875312296}
   - component: {fileID: 1875312295}
-  - component: {fileID: 1875312294}
+  - component: {fileID: 1875312297}
   m_Layer: 0
   m_Name: MyNetworkManager
   m_TagString: Untagged
@@ -5576,30 +5560,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1875312294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1875312293}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c7424c1070fad4ba2a7a96b02fbeb4bb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  port: 7777
-  NoDelay: 1
-  SendTimeout: 5000
-  ReceiveTimeout: 30000
-  serverMaxMessageSize: 16384
-  serverMaxReceivesPerTick: 10000
-  serverSendQueueLimitPerConnection: 10000
-  serverReceiveQueueLimitPerConnection: 10000
-  clientMaxMessageSize: 16384
-  clientMaxReceivesPerTick: 1000
-  clientSendQueueLimit: 10000
-  clientReceiveQueueLimit: 10000
 --- !u!114 &1875312295
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5617,9 +5577,9 @@ MonoBehaviour:
   autoStartServerBuild: 1
   autoConnectClientBuild: 0
   sendRate: 30
-  offlineScene: Assets/Scenes/SampleScene.unity
+  offlineScene: 
   onlineScene: Assets/Scenes/SampleScene.unity
-  transport: {fileID: 1875312294}
+  transport: {fileID: 1875312297}
   networkAddress: localhost
   maxConnections: 100
   authenticator: {fileID: 0}
@@ -5651,6 +5611,35 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1875312297
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1875312293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6b0fecffa3f624585964b0d0eb21b18e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Port: 7777
+  DualMode: 1
+  NoDelay: 1
+  Interval: 10
+  Timeout: 10000
+  FastResend: 2
+  CongestionWindow: 0
+  SendWindowSize: 4096
+  ReceiveWindowSize: 4096
+  MaxRetransmit: 40
+  NonAlloc: 1
+  MaximizeSendReceiveBuffersToOSLimit: 1
+  ReliableMaxMessageSize: 298449
+  UnreliableMaxMessageSize: 1199
+  debugLog: 0
+  statisticsGUI: 0
+  statisticsLog: 0
 --- !u!1 &1895221789
 GameObject:
   m_ObjectHideFlags: 0
@@ -6210,9 +6199,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Back
-
-'
+  m_text: eidt name
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

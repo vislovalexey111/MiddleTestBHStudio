@@ -1,6 +1,6 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
+using TMPro;
 
 [RequireComponent(typeof(PlayerController))]
 public class PlayerUIWrapper : MonoBehaviour
@@ -29,6 +29,12 @@ public class PlayerUIWrapper : MonoBehaviour
         _identityViewer.text = (_playerController.isServer) ? "Server" : "Client";
     }
 
+    private void OnDestroy()
+    {
+        _playerController.OnUpdatePoints -= UpdatePoints;
+        _playerController.OnWin -= ShowWinScreen;
+    }
+
     private void ShowWinScreen(string winnerName)
     {
         _winScreen.gameObject.SetActive(true);
@@ -45,12 +51,6 @@ public class PlayerUIWrapper : MonoBehaviour
         }
 
         _networkManager.ChangeScene();
-    }
-
-    private void OnDestroy()
-    {
-        _playerController.OnUpdatePoints -= UpdatePoints;
-        _playerController.OnWin -= ShowWinScreen;
     }
 
     private void UpdatePoints(int points)

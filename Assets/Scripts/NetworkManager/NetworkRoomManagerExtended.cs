@@ -1,12 +1,13 @@
-using Mirror;
 using System;
+using Mirror;
 
 public class NetworkRoomManagerExtended : NetworkRoomManager
 {
     public Action OnUpdateUI;
-    public Action OnConnecting;
     public Action OnFailedToConnect;
     public Action OnClientEntered;
+    public Action OnStartingHostFailed;
+    public Action OnBackToMainMenu;
     public Action<bool> OnPlayersReady;
     public Action<bool> OnSwitchReadyState;
     public Action<NetworkRoomPlayerExtended> OnUpdatePlayerReadyState;
@@ -26,9 +27,16 @@ public class NetworkRoomManagerExtended : NetworkRoomManager
         ServerChangeScene(GameplayScene);
     }
 
-    public override void OnRoomStartClient() => OnConnecting?.Invoke();
-    public override void OnRoomClientDisconnect() => OnFailedToConnect?.Invoke();
-    public override void OnRoomStopServer() => OnFailedToConnect?.Invoke();
+
+
+    public override void OnRoomClientExit()
+    {
+        if (!NetworkClient.isConnected)
+            OnFailedToConnect?.Invoke();
+
+        OnBackToMainMenu?.Invoke();
+    }
+
     public override void OnRoomClientEnter() => OnClientEntered?.Invoke();
     public override void OnRoomServerPlayersReady() => OnPlayersReady?.Invoke(true);
     public override void OnRoomServerPlayersNotReady() => OnPlayersReady?.Invoke(false);

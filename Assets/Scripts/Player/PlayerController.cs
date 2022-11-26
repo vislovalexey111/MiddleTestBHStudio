@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using Mirror;
 using Cinemachine;
 using TMPro;
+using Mirror;
 
 [RequireComponent(typeof(CharacterController), typeof(PlayerInput), typeof(MeshRenderer))]
 public class PlayerController : NetworkBehaviour

@@ -1,8 +1,8 @@
-using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
-public class PlayerLabelManager : MonoBehaviour
+public class RoomPlayerLabelManager : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI _readyStateDisplay;
     [SerializeField] private TextMeshProUGUI _playerName;

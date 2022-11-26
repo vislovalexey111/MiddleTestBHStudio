@@ -1,12 +1,13 @@
 using UnityEngine;
-using TMPro;
 using UnityEngine.UI;
-using System;
+using TMPro;
 
-public class PlayerNameInput : MonoBehaviour
+public class PlayerNameUIManager : MonoBehaviour
 {
+    [SerializeField] private MainMenuUIManager _mainMenuUIManager;
+
     [Header("UI")]
-    [SerializeField] private TMP_InputField _playerNameInput;
+    [SerializeField] private TMP_InputField _playerNameInputField;
     [SerializeField] private TextMeshProUGUI _errorDisplay;
     [SerializeField] private Button _buttonConfirm;
 
@@ -14,15 +15,13 @@ public class PlayerNameInput : MonoBehaviour
 
     public static string DisplayName { get; private set; }
 
-    public Action<bool> OnConfirmName;
-
     private void Start()
     {
         _buttonConfirm.interactable = false;
-        _playerNameInput.onValueChanged.AddListener( ValidateInput );
+        _playerNameInputField.onValueChanged.AddListener( ValidateInput );
         _buttonConfirm.onClick.AddListener( ConfirmName );
 
-        if(PlayerPrefs.HasKey(_playerPerfsNameKey)) _playerNameInput.text = PlayerPrefs.GetString(_playerPerfsNameKey);
+        if (PlayerPrefs.HasKey(_playerPerfsNameKey)) _playerNameInputField.text = PlayerPrefs.GetString(_playerPerfsNameKey);
     }
 
     private void ValidateInput(string playerName)
@@ -34,14 +33,15 @@ public class PlayerNameInput : MonoBehaviour
 
     private void ConfirmName()
     {
-        DisplayName = _playerNameInput.text;
-        PlayerPrefs.SetString(_playerPerfsNameKey, _playerNameInput.text);
-        OnConfirmName?.Invoke(true);
+        DisplayName = _playerNameInputField.text;
+        PlayerPrefs.SetString(_playerPerfsNameKey, _playerNameInputField.text);
+        _mainMenuUIManager.gameObject.SetActive(true);
+        gameObject.SetActive(false);
     }
 
     private void OnDestroy()
     {
         _buttonConfirm.onClick.RemoveAllListeners();
-        _playerNameInput.onValueChanged.RemoveAllListeners();
+        _playerNameInputField.onValueChanged.RemoveAllListeners();
     }
 }

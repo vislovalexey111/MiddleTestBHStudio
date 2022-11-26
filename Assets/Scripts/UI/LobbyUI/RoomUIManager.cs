@@ -1,31 +1,35 @@
-using Mirror;
 using UnityEngine;
 using UnityEngine.UI;
+using Mirror;
 
-public class RoomUIManager : NetworkBehaviour
+public class RoomUIManager : MonoBehaviour
 {
-    [SerializeField] private Button _buttonBack;
+    private NetworkRoomManagerExtended _networkManager;
+
+    [Header("UI Elements")]
+    [SerializeField] private Button _buttonToMainMenu;
     [SerializeField] private Button _buttonReady;
-    [SerializeField] private Button _buttonReadyCancel;
+    [SerializeField] private Button _buttonCancel;
     [SerializeField] private Button _buttonStart;
-    [SerializeField] private PlayerLabelManager[] _playerLabels;
-    [SerializeField] private NetworkRoomManagerExtended _networkManager;
+    [SerializeField] private RoomPlayerLabelManager[] _roomPlayerLabels;
+    
 
     private void Start()
     {
-        _buttonReady.onClick.AddListener(delegate { SwitchReady(true); });
-        _buttonReadyCancel.onClick.AddListener(delegate { SwitchReady(false); });
-        _buttonStart.onClick.AddListener(_networkManager.ChangeScene);
-        _buttonBack.onClick.AddListener(Disconnect);
-
+        _networkManager = FindObjectOfType<NetworkRoomManagerExtended>();
         _networkManager.OnUpdatePlayerReadyState += UpdatePlayerUI;
         _networkManager.OnPlayersReady += EnableStartButton;
         _networkManager.OnUpdateUI += UpdateUI;
 
-        if (isServer)
+        _buttonReady.onClick.AddListener(delegate { SwitchReady(true); });
+        _buttonCancel.onClick.AddListener(delegate { SwitchReady(false); });
+        _buttonStart.onClick.AddListener(_networkManager.ChangeScene);
+        _buttonToMainMenu.onClick.AddListener(Disconnect);
+
+        if (NetworkClient.isHostClient)
         {
             _buttonStart.gameObject.SetActive(true);
-            for (int i = 1; i < _playerLabels.Length; i++) _playerLabels[i].ShowButtonRemove();
+            for (int i = 1; i < _roomPlayerLabels.Length; i++) _roomPlayerLabels[i].ShowButtonRemove();
         }
 
         _buttonStart.interactable = false;
@@ -33,10 +37,10 @@ public class RoomUIManager : NetworkBehaviour
 
     private void OnDestroy()
     {
-        _buttonBack.onClick.RemoveAllListeners();
+        _buttonToMainMenu.onClick.RemoveAllListeners();
         _buttonStart.onClick.RemoveAllListeners();
         _buttonReady.onClick.RemoveAllListeners();
-        _buttonReadyCancel.onClick.RemoveAllListeners();
+        _buttonCancel.onClick.RemoveAllListeners();
 
         _networkManager.OnUpdatePlayerReadyState -= UpdatePlayerUI;
         _networkManager.OnPlayersReady -= EnableStartButton;
@@ -46,33 +50,29 @@ public class RoomUIManager : NetworkBehaviour
     private void SwitchReady(bool playerState)
     {
         _buttonReady.gameObject.SetActive(!playerState);
-        _buttonReadyCancel.gameObject.SetActive(playerState);
+        _buttonCancel.gameObject.SetActive(playerState);
         _networkManager.OnSwitchReadyState?.Invoke(playerState);
     }
 
     private void UpdateUI()
     {
-        for (int i = 0; i < _playerLabels.Length; i++)
-            _playerLabels[i].gameObject.SetActive(false);
+        for (int i = 0; i < _roomPlayerLabels.Length; i++)
+            _roomPlayerLabels[i].gameObject.SetActive(false);
 
         for (int i = 0; i < _networkManager.roomSlots.Count; i++)
         {
-            _playerLabels[i].gameObject.SetActive(true);
-            _playerLabels[i].UpdateLabelInfo(_networkManager.roomSlots[i] as NetworkRoomPlayerExtended);
+            _roomPlayerLabels[i].gameObject.SetActive(true);
+            _roomPlayerLabels[i].UpdateLabelInfo(_networkManager.roomSlots[i] as NetworkRoomPlayerExtended);
         }
     }
     private void Disconnect()
     {
-        _networkManager.StopClient();
-
-        if (isServer)
-        {
-            _networkManager.transport.ServerStop();
-            NetworkServer.DisconnectAll();
-            NetworkServer.ClearHandlers();
-        }
+        if (NetworkClient.isHostClient)
+            _networkManager.StopHost();
+        else
+            _networkManager.StopClient();
     }
 
     private void EnableStartButton(bool buttonState) => _buttonStart.interactable = buttonState;
-    private void UpdatePlayerUI(NetworkRoomPlayerExtended player) => _playerLabels[player.index].SetReadyStatus(player.readyToBegin);
+    private void UpdatePlayerUI(NetworkRoomPlayerExtended player) => _roomPlayerLabels[player.index].SetReadyStatus(player.readyToBegin);
 }
