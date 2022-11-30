@@ -12,6 +12,7 @@ public class NetworkRoomManagerExtended : NetworkRoomManager
     public Action<bool> OnSwitchReadyState;
     public Action<NetworkRoomPlayerExtended> OnUpdatePlayerReadyState;
 
+    [Server]
     public void ChangeScene()
     {
         PlayerController[] gamePlayers = FindObjectsOfType<PlayerController>();
@@ -27,16 +28,16 @@ public class NetworkRoomManagerExtended : NetworkRoomManager
         ServerChangeScene(GameplayScene);
     }
 
-
-
-    public override void OnRoomClientExit()
+    public override void OnRoomStopClient()
     {
-        if (!NetworkClient.isConnected)
-            OnFailedToConnect?.Invoke();
+        if (networkSceneName == GameplayScene)
+            ServerChangeScene(RoomScene);
 
         OnBackToMainMenu?.Invoke();
     }
-
+    
+    //public override void OnRoomServerSceneChanged(string sceneName) { if (sceneName == RoomScene) OnBackToMainMenu?.Invoke(); }
+    public override void OnRoomClientExit() { if (!NetworkClient.isConnected) OnFailedToConnect?.Invoke(); }
     public override void OnRoomClientEnter() => OnClientEntered?.Invoke();
     public override void OnRoomServerPlayersReady() => OnPlayersReady?.Invoke(true);
     public override void OnRoomServerPlayersNotReady() => OnPlayersReady?.Invoke(false);

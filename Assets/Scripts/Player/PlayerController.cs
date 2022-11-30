@@ -21,7 +21,6 @@ public class PlayerController : NetworkBehaviour
     [SerializeField] private int _pointsToWin = 3;
 
     [Header("Player Components")]
-    [SerializeField] private MeshRenderer _meshRenderer;
     [SerializeField] private TextMeshPro _displayName;
     [SerializeField] private PlayerInput _playerInput;
     [SerializeField] private Animator _animator;
@@ -51,7 +50,7 @@ public class PlayerController : NetworkBehaviour
     private void HandleTakeDamage(bool _, bool newValue)
     {
         if (newValue) StartCoroutine(TakeDamageCoroutine());
-        //_meshRenderer.material.color = newValue ? Color.red : Color.white;
+
         _animator.SetBool("GotDamage", newValue);
     }
 
